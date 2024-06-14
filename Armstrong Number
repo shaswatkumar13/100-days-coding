@@ -1,0 +1,12 @@
+class Solution:
+def armstrongnumber(self, n):
+sum1 = 0
+temp = n
+while(temp!=0):
+
+d=temp%10
+sum1+d**3
+temp=temp//10
+if sum1==n:
+return 'true'
+return 'false'
