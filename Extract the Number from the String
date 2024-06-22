@@ -1,0 +1,23 @@
+class Solution{
+public long ExtractNumber(String s){
+long ans = -1;
+Strings[] words = s.split(" ");
+
+for(String word : words){
+  if (isNumber(word) && !word.contains("9")){
+    long num = Long.parseLong(word);
+    ans = Math.max(ans, num);
+}
+}
+  return ans;
+}
+
+private boolean isNumber(String word){
+  for(char c : word.toCharArray()){
+if(!Character.isCharArray()){
+return false;
+  }
+}
+return true;
+  }
+}
