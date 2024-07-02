@@ -1,0 +1,22 @@
+class Solution {
+    public boolean compute(Node root) {
+        String s="";
+        while(root!=null){
+            s=s+root.data;
+            root=root.next;
+        }
+        if(isPalindrome(s)){
+            return true;
+        }
+        return false;
+    }
+    boolean isPalindrome(String s){
+        int j = s.length() - 1;
+        for (int i = 0; i < j; i++, j--) {
+            if (s.charAt(i) != s.charAt(j)) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
