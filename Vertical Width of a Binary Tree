@@ -1,0 +1,13 @@
+class Solution {
+     void help(int n, Node root,HashSet<Integer> h){
+        if(root==null) return;
+        h.add(n);
+        help(n-1,root.left,h);
+        help(n+1,root.right,h);
+    }
+    public int verticalWidth(Node root) {
+         HashSet<Integer> h=new HashSet<>();
+        help(0,root,h);
+        return h.size();
+    }
+}
