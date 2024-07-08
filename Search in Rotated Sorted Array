@@ -1,0 +1,27 @@
+class Solution {
+    int search(int[] arr, int key) {
+        return searchInRotatedSortedArray(arr,key,0,arr.length-1);
+    }
+    int searchInRotatedSortedArray(int[] arr,int key,int low,int high){
+        if(low>high) return -1;
+        int mid=(low+high)/2;
+        if(arr[mid]==key) return mid;
+        if(arr[low]<=arr[mid]){
+            if(arr[low]<=key&&arr[mid]>key){
+               return searchInRotatedSortedArray(arr,key,low,mid-1);
+            }else{
+               return searchInRotatedSortedArray(arr,key,mid+1,high);
+            }
+            
+        }
+        if(arr[mid]<=arr[high]){
+            if(arr[mid]<key&&arr[high]>=key){
+               return searchInRotatedSortedArray(arr,key,mid+1,high);
+            }else{
+               return searchInRotatedSortedArray(arr,key,low,mid-1);
+            }
+            
+        }
+        return -1;
+    }
+}
