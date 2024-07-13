@@ -1,0 +1,65 @@
+class Solution {
+    public List<Integer> shortestPath(int n, int m, int edges[][]) {
+        // Create an adjacency list for the graph
+        List<List<int[]>> adjList = new ArrayList<>();
+        for (int i = 0; i <= n; i++) {
+            adjList.add(new ArrayList<>());
+        }
+        
+        // Add edges to the adjacency list
+        for (int[] edge : edges) {
+            int start = edge[0];
+            int end = edge[1];
+            int weight = edge[2];
+            
+            adjList.get(start).add(new int[]{end, weight});
+            adjList.get(end).add(new int[]{start, weight});
+        }
+
+        // Priority queue to select the next node to process based on shortest distance
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[1] - b[1]);
+        int[] dist = new int[n + 1];  // Distance array
+        int[] prev = new int[n + 1];  // Previous node array
+        Arrays.fill(dist, Integer.MAX_VALUE);  // Initialize distances to infinity
+        Arrays.fill(prev, -1);  // Initialize previous nodes to -1
+        dist[1] = 0;  // Distance to start node is 0
+
+        pq.offer(new int[]{1, 0});  // Start with the start node
+
+        while (!pq.isEmpty()) {
+            int[] current = pq.poll();
+            int currentNode = current[0];
+            int currentDist = current[1];
+            
+            // Explore the neighbors of the current node
+            for (int[] neighbor : adjList.get(currentNode)) {
+                int nextNode = neighbor[0];
+                int edgeWeight = neighbor[1];
+                
+                // If a shorter path to nextNode is found
+                if (dist[nextNode] > currentDist + edgeWeight) {
+                    dist[nextNode] = currentDist + edgeWeight;
+                    prev[nextNode] = currentNode;
+                    pq.offer(new int[]{nextNode, dist[nextNode]});
+                }
+            }
+        }
+
+        // Reconstruct the shortest path
+        List<Integer> path = new ArrayList<>();
+        
+        if (dist[n] == Integer.MAX_VALUE) {
+            // If no path exists
+            path.add(-1);
+            return path;
+        }
+        
+        // Backtrack from node n to node 1 using the previous array
+        for (int at = n; at != -1; at = prev[at]) {
+            path.add(at);
+        }
+        Collections.reverse(path);  // Reverse to get the path from 1 to n
+        path.add(0, dist[n]);  // Add the total weight at the start of the list
+        return path;
+    }
+}
