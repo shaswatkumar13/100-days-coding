@@ -1,0 +1,49 @@
+class Solution{
+    public:
+    /*You are required to complete this method */
+    // Return the size of the largest sub-tree which is also a BST
+bool isBST(Node* root, int min = INT_MIN, int max = INT_MAX) 
+{
+    if (root == NULL) 
+    {
+        return true;
+    }
+
+    if (root->data < min || root->data > max) 
+    {
+        return false;
+    }
+
+    bool leftok = isBST(root->left, min, root->data - 1);
+    bool rightok = isBST(root->right, root->data + 1, max);
+
+    return leftok && rightok;
+}
+
+int height(Node* node) 
+{
+    if (node == NULL) 
+    {
+        return 0;
+    }
+    return 1 + height(node->left) + height(node->right);
+}
+
+int largestBstUtil(Node* root) 
+{
+    if (isBST(root)) 
+    {
+        return height(root);
+    }
+    return max(largestBstUtil(root->left), largestBstUtil(root->right));
+}
+
+int largestBst(Node* root) 
+{
+    if (root == NULL) 
+    {
+        return 0;
+    }
+    return largestBstUtil(root);
+}
+};
