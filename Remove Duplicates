@@ -1,0 +1,12 @@
+class Solution {
+    String removeDups(String str) {
+        String res="";
+        
+        for(char c:str.toCharArray()){
+            if(res.indexOf(c)<0){
+                res+=c;
+            }
+        }
+        return res;
+    }
+}
