@@ -1,0 +1,28 @@
+class Solution {
+    public long kthElement(int k, int arr1[], int arr2[]) {
+        int len=arr1.length+arr2.length;
+        
+        int[] ans=new int[len];
+        
+        //TRADITIONAL METHOD
+        // int t=0;
+        // for(int x:arr1)
+        // {
+        //     ans[t]=(long)x;
+        //     t++;
+        // }
+        // for(int x:arr2)
+        // {
+        //     ans[t]=(long)x;
+        //     t++;
+        // }
+        // Arrays.sort(ans);
+        
+        //USING INBUILT FUNCTIONS
+        System.arraycopy(arr1, 0, ans, 0, arr1.length);
+        System.arraycopy(arr2, 0, ans, arr1.length, arr2.length);
+        Arrays.sort(ans);
+        
+        return ans[k-1];
+    }
+}
