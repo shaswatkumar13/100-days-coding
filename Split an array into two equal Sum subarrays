@@ -1,0 +1,18 @@
+class Solution {
+    public boolean canSplit(int arr[]) {
+         int leftSum = 0;
+        int rightSum = 0;
+        for(int val : arr){
+            rightSum += val;
+        }
+        
+        for(int val : arr){
+            leftSum += val;
+            rightSum -= val;
+            if(leftSum == rightSum){
+                return true;
+            }
+        }
+        return false;
+    }
+}
