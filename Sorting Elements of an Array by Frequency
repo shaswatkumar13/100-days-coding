@@ -1,0 +1,31 @@
+class Solution {
+    // Function to sort the array according to frequency of elements.
+    public ArrayList<Integer> sortByFreq(int arr[]) {
+        HashMap<Integer,Integer> set=new HashMap<>();
+        //collects the frequency
+        for(int i:arr){
+            set.put(i,set.getOrDefault(i,0)+1);
+        }
+        
+        //create a list to apply comparable
+     ArrayList<Integer> list=new ArrayList<>();
+     for(int num:arr){
+         list.add(num);
+     }
+     
+     //apply comparable and sort the list based on frequency and vlaue
+     Collections.sort(list,(a,b)->{
+         int freqA = set.get(a);
+         int freqB = set.get(b);
+         if(freqA != freqB){
+             //simply return whose freq is more
+             return freqB - freqA;
+         }else{
+             //if freq is same return who ever is small
+             return a-b;
+         }
+     });
+     
+     return list;
+    }
+}
