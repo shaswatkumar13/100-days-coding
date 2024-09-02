@@ -1,0 +1,42 @@
+class Solution
+{
+    class Tuple{
+        int row;
+        int col;
+        int weight;
+        
+        Tuple(int a,int b,int c){
+            this.row=a;
+            this.col=b;
+            this.weight=c;
+        }
+    }
+    public int minimumCostPath(int[][] grid)
+    {
+        int n=grid.length;
+        int res[][]=new int[n][n];
+        
+        for(int num[]:res)Arrays.fill(num,Integer.MAX_VALUE);
+        res[0][0]=grid[0][0];
+        int direction[][]={{0,1},{0,-1},{-1,0},{1,0}};
+        
+        PriorityQueue<Tuple>pq=new PriorityQueue<>((Tuple a,Tuple b)->Integer.compare(a.weight,b.weight));
+        pq.add(new Tuple(0,0,grid[0][0]));
+        while(!pq.isEmpty()){
+            Tuple tuple=pq.poll();
+            int row=tuple.row;
+            int col=tuple.col;
+            int weight=tuple.weight;
+            
+            for(int dir[]:direction){
+                int row_=row+dir[0];
+                int col_=col+dir[1];
+                if(row_>=0&&col_>=0&&row_<n&&col_<n&&(res[row_][col_]>weight+grid[row_][col_])){
+                    res[row_][col_]=weight+grid[row_][col_];
+                    pq.add(new Tuple(row_,col_,res[row_][col_]));
+                }
+            }
+        }
+        return res[n-1][n-1];
+    }
+}
