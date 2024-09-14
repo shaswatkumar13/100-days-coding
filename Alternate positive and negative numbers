@@ -1,0 +1,37 @@
+class Solution {
+  public:
+
+    void rearrange(vector<int> &arr) {
+        queue<int> pos;
+        queue<int> neg;
+        
+        for(int i=0;i<arr.size();i++){
+            if(arr[i]<0){
+                neg.push(arr[i]);
+            } else{
+                pos.push(arr[i]);
+            }
+        }
+        
+        int i = 0;
+        while(!pos.empty() && !neg.empty()){
+            arr[i++]=pos.front();
+            pos.pop();
+            arr[i++]=neg.front();
+            neg.pop();
+        }
+        // check if pos isEmpty
+        if(!pos.empty()){
+           while(!pos.empty()){
+            arr[i++]=pos.front();
+            pos.pop();
+           } 
+        }
+        else{
+            while(!neg.empty()){
+            arr[i++]=neg.front();
+            neg.pop();
+           }
+        }
+    }
+};
