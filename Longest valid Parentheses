@@ -1,0 +1,39 @@
+class Solution{
+    static int maxLength(String S){
+         Stack<Integer> st=new Stack<Integer>();
+        ArrayList<Integer> list =new ArrayList<Integer>();
+        char arr[]=S.toCharArray();
+        
+        for(int i=0;i<arr.length;i++){
+            char ch=arr[i];
+            if(ch=='('){
+                st.push(i);
+            }else{
+                if(!st.isEmpty()){
+                    int pop=st.pop();
+                    list.add(pop);
+                    list.add(i);
+                }
+            }
+        }
+        
+        int brr[]=new int[arr.length];
+        for (int ele:list) {
+            brr[ele]=1;
+        }
+        
+        int max=-1;
+        int count=0;
+        for(int m:brr){
+            if(m==1){
+               count++;
+            }else{
+                if(count>max){
+                    max=count;
+                }
+                count=0;
+            }
+        }
+        return (count>max)?count:max;
+    }
+}
