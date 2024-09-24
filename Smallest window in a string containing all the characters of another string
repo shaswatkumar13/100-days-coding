@@ -1,0 +1,63 @@
+class Solution
+{
+    public static String smallestWindow(String s, String p) {
+        if (s.length() < p.length()) {
+            return "-1";
+        }
+
+        // Create a frequency map for characters in p
+        HashMap<Character, Integer> pMap = new HashMap<>();
+        for (char ch : p.toCharArray()) {
+            pMap.put(ch, pMap.getOrDefault(ch, 0) + 1);
+        }
+
+        // Variables to track the window
+        int start = 0; // Left pointer for the window
+        int minLen = Integer.MAX_VALUE; // To track the minimum length of valid window
+        int minStart = -1; // To store starting index of the smallest window
+        int count = 0; // To track how many characters matched the required frequency
+
+        // HashMap to track the frequency of characters in the current window
+        HashMap<Character, Integer> windowMap = new HashMap<>();
+
+        // Expand the window with the right pointer
+        for (int end = 0; end < s.length(); end++) {
+            char ch = s.charAt(end);
+
+            // Add the current character to the window's map
+            windowMap.put(ch, windowMap.getOrDefault(ch, 0) + 1);
+
+            // If the character is in p and its frequency in the window matches the required frequency
+            if (pMap.containsKey(ch) && windowMap.get(ch).intValue() <= pMap.get(ch).intValue()) {
+                count++;
+            }
+
+            // When we have a valid window (i.e., all characters are matched)
+            while (count == p.length()) {
+                // Try to minimize the window
+                if (end - start + 1 < minLen) {
+                    minLen = end - start + 1;
+                    minStart = start;
+                }
+
+                // Shrink the window by removing the left character
+                char leftChar = s.charAt(start);
+                windowMap.put(leftChar, windowMap.get(leftChar) - 1);
+
+                // If the left character is in p and the frequency drops below the required frequency
+                if (pMap.containsKey(leftChar) && windowMap.get(leftChar) < pMap.get(leftChar)) {
+                    count--;
+                }
+                start++;
+            }
+        }
+
+        // If no valid window was found, return "-1"
+        if (minStart == -1) {
+            return "-1";
+        }
+
+        // Return the smallest window substring
+        return s.substring(minStart, minStart + minLen);
+    }
+}
